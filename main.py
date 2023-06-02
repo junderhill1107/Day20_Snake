@@ -7,7 +7,7 @@ import time
 score = 0
 
 screen = Screen()
-screen.setup(width=600, height=600)
+screen.setup(width=640, height=640)
 screen.bgcolor("black")
 screen.title("Snake Game")
 screen.tracer(0)
@@ -47,6 +47,7 @@ while game_is_on:
         # If the Snake is not moving, I hit a wall and the game is over.
         print("Game Over!!!")
         print(f"Your score is: {scoreboard.score}")
+        scoreboard.game_over()
     else:
         if snake.head.distance(food) < 15:
             food.refresh()

@@ -8,8 +8,10 @@ DOWN = 270
 class Snake:
     def __init__(self) -> None:
         self.segments = []
+        self.wall_segments = []
         self.create_snake()
         self.head = self.segments[0]
+        self.build_border_wall()
 
     def create_snake(self):
         xstart = 0
@@ -59,10 +61,17 @@ class Snake:
     def wall_check(self, xcor, ycor):
         # print(f"x,y: {xcor},{ycor}")
         # Returning True says, I hit a wall.
-        if xcor >= 300 or xcor <= -300:
+       
+        # Wall segments
+        if xcor >= 280 or xcor <= -300:
             return True
-        if ycor >= 300 or ycor <= -300:
+        if ycor >= 300 or ycor <= -280:
             return True
+            
+        # Snake segments
+        for segment in self.segments[1:]:
+            if self.head.distance(segment) < 10:
+                return True
         return False
     
 
@@ -72,3 +81,55 @@ class Snake:
         t1.penup()
         t1.speed("fastest")
         self.segments.append(t1)
+
+    
+    def build_border_wall(self):
+        # Top Border Wall
+        xcor = -310
+        ycor = 310
+        for wall_segment in range(-320, 320, 20):
+            t1 = Turtle("square")
+            t1.color("red")
+            t1.penup()
+            t1.speed()
+            t1.goto(xcor, ycor)
+            xcor += 20
+            self.wall_segments.append(t1)
+
+        # Bottom Border Wall
+        xcor = -310
+        ycor = -300
+        for wall_segment in range(-320, 320, 20):
+            t2 = Turtle("square")
+            t2.color("red")
+            t2.penup()
+            t2.speed()
+            t2.goto(xcor, ycor)
+            xcor += 20
+            self.wall_segments.append(t2)
+
+        # Left Border Wall
+        xcor = -310
+        ycor = 310
+        for wall_segment in range(-320, 320, 20):
+            t3 = Turtle("square")
+            t3.color("red")
+            t3.penup()
+            t3.speed()
+            t3.goto(xcor, ycor)
+            ycor -= 20
+            self.wall_segments.append(t3)
+
+        # Right Border Wall
+        xcor = 300
+        ycor = 310
+        for wall_segment in range(-320, 320, 20):
+            t4 = Turtle("square")
+            t4.color("red")
+            t4.penup()
+            t4.speed()
+            t4.goto(xcor, ycor)
+            ycor -= 20
+            self.wall_segments.append(t4)
+
+
